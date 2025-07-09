@@ -1,0 +1,66 @@
+
+Final Project Vision: RetroSocial
+A 2000s-style simple social media web app
+
+Purpose:
+Create a clean, basic social media platform. Users can:
+
+Register and log in
+
+Post and manage text updates
+
+View a public feed
+
+View and edit user profiles
+
+Tech Stack
+Feature	Technology
+Frontend	React (Vite)
+Styling	TailwindCSS
+Routing	React Router
+Auth	Firebase Authentication
+Backend	Express + MongoDB
+API Calls	Axios or Fetch
+State	React Hooks
+Config	.env files for keys
+
+Main Pages and Routes
+Page	Path	Access	Description
+Home	/	Public	Displays post feed. Logged-in users can post.
+Login	/login	Logged-out	Firebase email/password login
+Register	/register	Logged-out	Sign up via Firebase
+Profile	/profile/:username	Public	View a user's bio and posts
+Edit Profile	/profile/:username/edit	Owner only	Form to edit username and bio
+
+
+
+Auth Rules
+Action	            Logged-In	Logged-Out
+View home feed	    Yes     	Yes
+Post	               Yes	    No
+Edit/Delete post	Yes (own)	No
+View profile	    Yes	            Yes
+Edit profile	    Yes (own)	    No
+
+
+
+create env file to secure firebase api,
+Styling Guide with Tailwind
+Section	Class Example
+Navbar	bg-[#3b5998] text-white py-3 px-5
+Page background	bg-gray-100
+Container	max-w-2xl mx-auto
+Buttons	bg-blue-600 text-white px-3 py-1 rounded
+Font	font-sans text-sm
+Avoid:
+
+Animations
+
+Hover effects
+
+Shadows
+
+Modern gradients.
+
+
+
