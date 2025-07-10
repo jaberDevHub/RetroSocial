@@ -3,7 +3,9 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useAuth } from '../context/AuthContext';
-import API from '../utils/api';
+import { usePosts } from '../context/PostContext';
+
+const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
 const schema = yup.object().shape({
   content: yup.string().max(280, 'Post cannot exceed 280 characters'),
@@ -11,6 +13,7 @@ const schema = yup.object().shape({
 
 const PostBox = ({ onPostCreated }) => {
   const { currentUser } = useAuth();
+  const { addPost } = usePosts();
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
 
@@ -117,7 +120,7 @@ const PostBox = ({ onPostCreated }) => {
       reader.onloadend = async () => {
         imageUrl = reader.result; // Base64 string
         try {
-          await API.post('/posts', { content: data.content, userEmail: currentUser.email, imageUrl });
+          await addPost({ content: data.content, userEmail: currentUser.email, imageUrl });
           reset();
           setImageFile(null);
           setImagePreview(null);
@@ -135,7 +138,7 @@ const PostBox = ({ onPostCreated }) => {
       };
     } else {
       try {
-        await API.post('/posts', { content: data.content, userEmail: currentUser.email });
+        await addPost({ content: data.content, userEmail: currentUser.email });
         reset();
         if (onPostCreated) {
           onPostCreated();

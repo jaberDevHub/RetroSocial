@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import PostBox from '../components/PostBox';
 import PostCard from '../components/PostCard';
-import API from '../utils/api';
 
+const API_BASE = import.meta.env.VITE_API_BASE_URL;
 const Home = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -11,8 +11,9 @@ const Home = () => {
   const fetchPosts = useCallback(async () => {
     try {
       setLoading(true);
-      const response = await API.get('/posts');
-      setPosts(response.data);
+      const response = await fetch(`${API_BASE}/posts`);
+      const data = await response.json();
+      setPosts(data);
     } catch (err) {
       console.error('Error fetching posts:', err);
       setError('Failed to load posts.');

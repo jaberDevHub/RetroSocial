@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import API from '../utils/api';
+import { usePosts } from '../context/PostContext';
 
+const API_BASE = import.meta.env.VITE_API_BASE_URL;
 const PostCard = ({ post, onPostModified }) => {
   const { currentUser } = useAuth();
+  const { updatePost, deletePost } = usePosts();
   const [isEditing, setIsEditing] = useState(false);
   const [editedContent, setEditedContent] = useState(post.content);
 
@@ -12,7 +14,7 @@ const PostCard = ({ post, onPostModified }) => {
   const handleDelete = async () => {
     if (window.confirm('Are you sure you want to delete this post?')) {
       try {
-        await API.delete(`/posts/${post._id}`);
+        await deletePost(post._id);
         alert('Post deleted successfully!');
         if (onPostModified) {
           onPostModified();
@@ -26,7 +28,7 @@ const PostCard = ({ post, onPostModified }) => {
 
   const handleSave = async () => {
     try {
-      await API.put(`/posts/${post._id}`, { content: editedContent });
+      await updatePost(post._id, editedContent);
       alert('Post updated successfully!');
       setIsEditing(false);
       if (onPostModified) {

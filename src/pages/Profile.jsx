@@ -2,8 +2,8 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import PostCard from '../components/PostCard';
-import API from '../utils/api';
 
+const API_BASE = import.meta.env.VITE_API_BASE_URL;
 const Profile = () => {
   const { username } = useParams(); // This will be the email prefix from Firebase
   const { currentUser } = useAuth();
@@ -18,8 +18,9 @@ const Profile = () => {
     }
     try {
       setLoading(true);
-      const response = await API.get(`/posts?userEmail=${currentUser.email}`);
-      setUserPosts(response.data);
+      const response = await fetch(`${API_BASE}/posts?userEmail=${currentUser.email}`);
+      const data = await response.json();
+      setUserPosts(data);
     } catch (err) {
       console.error('Error fetching user posts:', err);
       setError('Failed to load user posts.');

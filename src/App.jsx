@@ -7,6 +7,8 @@ import Register from './pages/Register';
 import Profile from './pages/Profile';
 import EditProfile from './pages/EditProfile';
 import PrivateRoute from './components/PrivateRoute';
+const API_BASE = import.meta.env.VITE_API_BASE_URL; // Ensure this is set in your .env file
+
 
 const App = () => {
   return (
@@ -15,7 +17,8 @@ const App = () => {
         <Navbar />
         <div className="container max-w-2xl mx-auto p-4">
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Home />
+          } />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route
@@ -24,6 +27,7 @@ const App = () => {
                 <PrivateRoute>
                   <Profile />
                 </PrivateRoute>
+                
               }
             />
             <Route
